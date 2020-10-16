@@ -55,6 +55,27 @@ public class QuickSort {
         sort(a, j + 1, hi);
     }
 
+    // 3-way quicksort
+    // helps to escape an issue with duplicate values, by putting them in the middle
+    private static void sortByThreeWayPartition(Comparable[] a, int lo, int hi) {
+        if (hi <= lo) return ;
+        int lt = lo, gt = hi;
+        Comparable v = a[lo];
+        int i = lo;
+        while (i <= gt) {
+            int cmp = a[i].compareTo(v);
+            if (cmp < 0) {
+                SortingHelper.exchange( a, lt++, i++);
+            }else if (cmp > 0) {
+                SortingHelper.exchange(a, i, gt--);
+            }else{
+                i ++;
+            }
+        }
+        sortByThreeWayPartition(a, lo, lt - 1);
+        sortByThreeWayPartition(a, gt + 1, hi);
+    }
+
     private static int partition(Comparable[] a, int lo, int hi){
         int i = 0, j = hi + 1;
         while (true) {
